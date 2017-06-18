@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<!-- <property name="LOG_ROOT" value="c:/logs" /> -->
+	
+	<!-- commenting out all the appenders for deployment to cloud  -->
+	<!-- <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+		<file>courseapp-service.log</file>
+		<append>true</append>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d %p %t - %c - %X{correlationId} - %M - %L - %m%n</pattern>
+		</encoder>
+	</appender> -->
+
+	<!-- <appender name="FILE-AUDIT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>./courseapp-service.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d %p %t - %c - %X{correlationId} - %M - %L - %m%n
+			</Pattern>
+		</encoder>
+
+	 <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			rollover daily
+			<fileNamePattern>./archived/courseapp-service.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>1MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	</appender> -->
+		<!--
+	<appender name="htmlAppender" class="ch.qos.logback.core.FileAppender">
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="ch.qos.logback.classic.html.HTMLLayout">
+				<pattern>%relative%thread%mdc%level%logger%msg</pattern>
+			</layout>
+		</encoder>
+		<file>test.html</file>
+	</appender>  -->
+
+	<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- <appender-ref ref="FILE" /> -->
+		<appender-ref ref="CONSOLE" />
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="ASYNC" />
+		<!-- <appender-ref ref="FILE-AUDIT" /> -->
+	</root>
+
+	<logger name="org.springframework.binding">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.hibernate.SQL">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.hibernate.type">
+		<level value="info" />
+	</logger>
+
+	<logger name="com.courseapp.controller" additivity="false">
+		<level value="debug" />
+		<!-- <appender-ref ref="fileAppender" /> -->
+		<appender-ref ref="CONSOLE" />
+		<!-- <appender-ref ref="FILE-AUDIT" /> -->
+		<!-- <appender-ref ref="htmlAppender" /> -->
+	</logger>
+</configuration>
