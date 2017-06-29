@@ -1,8 +1,0 @@
-applications:
-- path: target\CourseApp.ear-0.0.1-SNAPSHOT.ear
-  memory: 512M
-  instances: 1
-  domain: mybluemix.net
-  name: CourseApp
-  host: courseapp-001
-  disk_quota: 1024M
