@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-// @ImportResource({"classpath:applicationContext.xml"})
 @EnableJpaRepositories("com.courseapp.dao")
 @EntityScan("com.courseapp.service.types")
 @ComponentScan(basePackages = { "com.courseapp" })
