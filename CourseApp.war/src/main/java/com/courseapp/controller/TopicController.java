@@ -2,12 +2,15 @@ package com.courseapp.controller;
 
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +26,17 @@ import com.courseapp.service.types.CourseAppHttpResponseType;
 import com.courseapp.service.types.Topic;
 
 @RestController
+@ManagedResource(objectName = "courseApp:name=topicController")
 public class TopicController extends AbstractServiceController {
 
 	@Autowired
 	private TopicService topicService;
+	
+	@Value("${app.welcomeMessage:Welcome to CourseApp !!! - default}")
+	private String welcomeMessage;
+	
+	private String defaultMessage = "Welcome to CourseApp !!!";
+	
 	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(TopicController.class);
 	
 	@Autowired
@@ -34,8 +44,14 @@ public class TopicController extends AbstractServiceController {
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String loadHome() {
-		String response = "Welcome to CourseApp!!!";
-		return response;
+		String message = "";
+		System.out.println(" Welcome Message is: "+welcomeMessage);
+		if(StringUtils.isEmpty(welcomeMessage)){
+			message = defaultMessage;
+		} else {
+			message = welcomeMessage;
+		}
+		return message;
 	}
 	@RequestMapping(value ="/topics", method=RequestMethod.GET)
 	public ResponseEntity<CourseAppHttpResponseType> getAllTopics(CourseAppHttpRequestType request) throws CourseAppServiceException {
@@ -100,4 +116,16 @@ public class TopicController extends AbstractServiceController {
 	public void deleteTopic(@PathVariable String id){
 		topicService.deleteTopic(id);
 	}
+	
+	@ManagedAttribute
+	public String getWelcomeMessage() {
+		return welcomeMessage;
+	}
+	
+	@ManagedAttribute
+	public void setWelcomeMessage(String welcomeMessage) {
+		this.welcomeMessage = welcomeMessage;
+	}
+	
+	
 }

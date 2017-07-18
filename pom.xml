@@ -11,23 +11,32 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.2.RELEASE</version>
+		<version>1.5.4.RELEASE</version>
 	</parent>
-	
+
 	<modules>
 		<module>CourseApp.core</module>
 		<module>CourseApp.war</module>
 	</modules>
-	
+	<properties>
+		<spring-cloud.version>Dalston.SR1</spring-cloud.version>
+	</properties>
 	<dependencyManagement>
 		<dependencies>
 			<!-- Move this dependency to provided for liberty deployment -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-			<version>1.4.2.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-tomcat</artifactId>
+				<scope>provided</scope>
+				<version>1.5.4.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>
